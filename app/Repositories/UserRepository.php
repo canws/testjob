@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Repositories;
-use Illuminate\Http\Request;
-use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
+
 use Auth;
+use Session;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 
 /**
  * Class UserRepository.
@@ -20,21 +23,12 @@ class UserRepository extends BaseRepository
         return User::class;
     }
 
-    public function authenticate(Request $request)
+    public function authenticate($credentials)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-
+        
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
- 
-            return redirect()->intended('dashboard');
+            Session::regenerate($credentials);
         }
  
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
     }
 }
