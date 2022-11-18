@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-
+use Auth;
 class IsAdmin
 {
     /**
@@ -16,6 +16,14 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        // return $next($request);
+        if(!Auth::check()){
+            return redirect('/');
+        }
+        if (Auth::user()->role == 'admin') {
+            return $next($request);
+        }else{
+            // echo "wrong";
+            return redirect('/home');
+        }
     }
 }

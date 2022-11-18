@@ -51,6 +51,11 @@
                                 </li>
                             @endif
                         @else
+                        @if (Auth::user()->role=='admin')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('users') }}">{{ __('Users') }}</a>
+                            </li>
+                        @endif
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('all-posts') }}">{{ __('Posts') }}</a>
                         </li>
