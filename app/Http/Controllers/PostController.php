@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -148,5 +149,29 @@ class PostController extends Controller
                 ]);
             }
         }
+    }
+
+    // api function for post add
+    public function createPost(Request $request){
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['sts' => false, 'msg' => $validator->messages()->all()]);
+        }else{
+            $post = Post::savePost($request->all(), $image_name="");
+            if($post){
+                return response()->json(['sts' => true, 'msg' => 'Post inserted successfully', 'code' => 200]);
+            }else{
+                return response()->json(['sts' => false, 'msg' => 'Unable to process', 'code' => 422]);
+            }
+        }
+    }
+
+    public function runEmailCommand(){
+        $artisan = \Artisan::call('users:email');
+        $output = \Artisan::output();
+        return $output;
     }
 }

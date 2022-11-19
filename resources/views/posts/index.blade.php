@@ -29,7 +29,12 @@
                                     <tr>
                                         <td class="p-2">{{$key+1}}</td>
                                         <td class="p-2">
-                                            <img src="{{ asset('storage/'.$post->featured_image) }}" class="table_image"/>
+                                            @if ($post->featured_image!="")
+                                                <img src="{{ asset('storage/'.$post->featured_image) }}" class="table_image"/>
+                                                @else
+                                                <img src="{{ asset('assets/images/post_banner.jpeg') }}" class="table_image"/>
+                                            @endif
+                                            
                                         </td>
                                         <td class="p-2">{{$post->title}}</td>
                                         <td class="p-2">
