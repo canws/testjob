@@ -17,7 +17,8 @@ use App\Http\Controllers\AdminController;
 */
 
 Route::get('/', function () { return view('auth.login');})->name('login');
-Route::get('/artisan/user/email', [AdminController::class, 'index'])->name('users');
+Route::get('/todo', function () { return view('todo');});
+Route::get('/user/email', [PostController::class, 'runEmailCommand']);
 
 Auth::routes();
 

@@ -34,7 +34,7 @@ class SendEmail extends Command
         foreach($users as $user){
             $subject = "Test Email";
             $message = "Admin testing command email";
-            $from_email = 'prem.canws@gmail.com';
+            $from_email = 'canwstech@gmail.com';
             $to = $user->email;
             $headers = "MIME-Version: 1.0" . "\r\n";
             $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
